@@ -1,0 +1,39 @@
+service: aws-node-http-api-project
+frameworkVersion: '3'
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  environment:
+    NODE_ENV: ${opt:stage, self:provider.stage, 'dev'}
+
+functions:
+  getUser:
+    handler: src/handlers/users.getUser
+    events:
+      - http:
+          method: GET
+          path: /users
+  createUser:
+    handler: src/handlers/users.createUser
+    events:
+      - http:
+          method: POST
+          path: /users
+  createBlogPost:
+    handler: src/handlers/blogPosts.createBlogPost
+    events:
+      - http:
+          method: POST
+          path: /blog-posts
+  createProduct:
+    handler: src/handlers/products.createProduct
+    events:
+      - http:
+          method: POST
+          path: /products
